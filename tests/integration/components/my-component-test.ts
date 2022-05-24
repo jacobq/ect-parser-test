@@ -8,12 +8,10 @@ module('Integration | Component | my-component', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<MyComponent />`);
-    // Problem is coming from type assertion (<HTMLFormElement>) here
-    // (commenting out the following line prevents the parsing error below)
+    // This is fine now since @typescript-eslint/parser correctly identifies
+    // this type assertion instead of mistaking it as JSX
     assert.strictEqual((<HTMLFormElement>this.element).textContent?.trim(), '');
 
-    // ESLint:
-    // Parsing error: Unterminated JSX contents.
     await render(hbs`
       <MyComponent>
         template block text
