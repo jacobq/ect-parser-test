@@ -7,20 +7,19 @@ module('Integration | Component | my-component', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    await render(hbs`<MyComponent />`);
+    // Problem is coming from type assertion (<HTMLFormElement>) here
+    // (commenting out the following line prevents the parsing error below)
+    assert.strictEqual((<HTMLFormElement>this.element).textContent?.trim(), '');
 
-    await render(hbs`{{my-component}}`);
-
-    assert.strictEqual(this.element.textContent.trim(), '');
-
-    // Template block usage:
+    // ESLint:
+    // Parsing error: Unterminated JSX contents.
     await render(hbs`
-      {{#my-component}}
+      <MyComponent>
         template block text
-      {{/my-component}}
+      </MyComponent>
     `);
 
-    assert.strictEqual(this.element.textContent.trim(), 'template block text');
+    assert.strictEqual(this.element.textContent?.trim(), 'template block text');
   });
 });
