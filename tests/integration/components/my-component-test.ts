@@ -12,7 +12,7 @@ module('Integration | Component | my-component', function (hooks) {
 
     await render(hbs`{{my-component}}`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.strictEqual(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
@@ -21,6 +21,6 @@ module('Integration | Component | my-component', function (hooks) {
       {{/my-component}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.strictEqual(this.element.textContent.trim(), 'template block text');
   });
 });
